@@ -9,5 +9,8 @@ class Role extends SpatieRole
 {
     use HasFactory;
     use HasUuids;
+
+    protected $keyType = 'string';
     protected $primaryKey = 'uuid';
+    public $incrementing = 'false';
 }

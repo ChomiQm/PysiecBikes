@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class BikesTableSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $bikes = [
             [

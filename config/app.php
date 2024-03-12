@@ -36,6 +36,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
 
