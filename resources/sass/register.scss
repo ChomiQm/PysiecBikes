@@ -1,0 +1,95 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+// Styles for the registration container
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .row {
+        width: 100%;
+    }
+}
+
+.card {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1); // Semi-transparent white with a 'glass' effect
+    backdrop-filter: blur(5px); // Apply a blur to the background content behind the card
+    border-radius: 0.5rem;
+    padding: 2rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #61008A;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    margin: -2rem -2rem 2rem -2rem;
+}
+
+.form-group {
+    color: #FFF;
+}
+
+.form-control {
+    width: 150%;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    margin-bottom: 1rem;
+    display: block;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    border: none;
+
+    &.btn-primary {
+        background-color: #61008A;
+        color: #fff;
+
+        &:hover {
+            background-color: darken(#61008A, 5%);
+        }
+    }
+
+    &.btn-secondary {
+        background-color: #61008A;
+        color: #fff;
+        margin-bottom: 5%;
+
+        &:hover {
+            background-color: darken(#61008A, 5%);
+        }
+    }
+
+    &.btn-success {
+        background-image: linear-gradient(to right, #61008A, #06887F);
+        color: #fff;
+
+        &:hover {
+            background-image: linear-gradient(to right, darken(#61008A, 5%), darken(#06887F, 5%));
+        }
+    }
+}
