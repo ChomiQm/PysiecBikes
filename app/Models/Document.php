@@ -3,39 +3,40 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Document extends Model
 {
-    protected $keyType = 'uuid';
-
+    protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = ['name', 'content', 'version', 'created_by'];
-
-    protected $attributes = [
-        'version' => 1,
+    protected $fillable = [
+        'id', 'name', 'current_version_id',
     ];
 
-    protected static function boot(): void
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = (string) Str::uuid();
-            }
-        });
-    }
-
+    /**
+     * Get the versions for the document.
+     */
     public function versions(): HasMany
     {
-        return $this->hasMany(DocumentVersion::class);
+        return $this->hasMany(DocumentVersion::class, 'document_id');
     }
 
-    public function creator(): BelongsTo
+    /**
+     * Get the current version of the document.
+     */
+    public function currentVersion(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by', 'uuid');
+        return $this->belongsTo(DocumentVersion::class, 'current_version_id');
+    }
+
+    /**
+     * The roles that have access to the document.
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'document_access');
     }
 }

@@ -28,13 +28,14 @@
 /* --------------------------------------------HEADER-------------------------------------------- */
 
 .header{
-    min-height: 100vh;
+    min-height:100vh;
     width: 100%;
     /* 1920x1080 */
     background-image: linear-gradient(rgba(77,77,77,0.5),rgba(55,55,55,1)),url(../images/bike_banner.jpg);
     background-position: center;
     background-size: cover;
     position: relative;
+    z-index: 1;
 }
 
 header{

@@ -4,33 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DocumentVersion extends Model
 {
-    protected $keyType = 'uuid';
-
+    protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = ['document_id', 'changes', 'version', 'updated_by'];
+    protected $fillable = [
+        'id', 'document_id', 'version_number', 'file_path', 'checksum', 'created_by',
+    ];
 
-    protected static function boot(): void
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = (string) Str::uuid();
-            }
-        });
-    }
-
+    /**
+     * Get the document that owns the version.
+     */
     public function document(): BelongsTo
     {
-        return $this->belongsTo(Document::class);
+        return $this->belongsTo(Document::class, 'document_id');
     }
 
-    public function updater(): BelongsTo
+    /**
+     * The encryption keys for the document version.
+     */
+    public function encryptionKeys(): HasMany
     {
-        return $this->belongsTo(User::class, 'updated_by', 'uuid');
+        return $this->hasMany(EncryptionKey::class, 'document_version_id');
     }
 }
