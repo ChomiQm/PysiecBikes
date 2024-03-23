@@ -1,0 +1,95 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Styles for the login container
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .row {
+        width: 100%;
+    }
+}
+
+.card {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); // Increased blur for aesthetic
+    border-radius: 0.5rem;
+    padding: 2rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); // Darker shadow for depth
+}
+
+.card-header {
+    background-color: #61008A;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    margin: -2rem -2rem 2rem -2rem;
+}
+
+.form-group {
+    color: #000; // Changed for better contrast
+}
+
+.form-control {
+    background-color: #fff;
+    color: #333;
+    width: 100%; // Adjusted width
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    margin-bottom: 1rem;
+    display: block;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    border: none;
+
+    &.btn-primary {
+        background-color: #61008A;
+        color: #fff;
+
+        &:hover {
+            background-color: lighten(#61008A, 10%); // Lighten on hover for feedback
+        }
+    }
+
+    &.btn-link {
+        color: #fff;
+        &:hover {
+            color: lighten(#61008A, 20%); // Lighten on hover for feedback
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: 1rem;
+        max-width: 95%; // Slightly more padding and narrower max-width for mobile
+    }
+
+    .form-control {
+        // Make sure the input fields do not overflow the card on mobile devices
+        width: 100%; // Ensure full width within the card
+    }
+}

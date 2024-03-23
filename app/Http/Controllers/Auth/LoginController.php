@@ -13,7 +13,7 @@ use Illuminate\Contracts\Foundation\Application;
 
 class LoginController extends Controller
 {
-    protected string $redirectTo = '/home';
+    protected string $redirectTo = '/';
 
     public function __construct()
     {

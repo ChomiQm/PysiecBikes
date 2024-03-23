@@ -8,5 +8,5 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 class ResetPasswordController extends Controller
 {
     use ResetsPasswords;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/resetPassword';
 }

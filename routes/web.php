@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Bike\BikeController;
 use App\Http\Controllers\UserData\UserDataController;
@@ -22,11 +23,13 @@ Route::get('/form', function () {
 // Rejestracja - trasy obsługiwane przez RegisterController
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
-
 // Zarządzanie danymi użytkownika
 Route::resource('user_data', UserDataController::class);
 
 // Trasy dla uwierzytelniania generowane przez Laravel (login, logout, itp.)
 Auth::routes();
 
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

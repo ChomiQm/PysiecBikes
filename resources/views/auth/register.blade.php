@@ -1,18 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    @vite(['resources/sass/register.scss', 'resources/css/register.css'])
+    @vite(['resources/sass/register.scss'])
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Rejestracja</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}" class="form-container">
+                        <form method="POST" action="{{ route('register') }}" class="form-container" autocomplete="on">
                             @csrf
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <!-- Step 1: User Credentials -->
                             <div id="step1" class="form-step full-width-inputs">
+                                <!-- Nickname -->
+                                <div class="form-group">
+                                    <label for="email">Nazwa użytkownika
+                                        <input type="text" class="form-control" name="name" required autofocus>
+                                    </label>
+                                </div>
                                 <!-- Email Address -->
                                 <div class="form-group">
                                     <label for="email">Adres Email
@@ -40,7 +54,7 @@
                             </div>
 
                             <!-- Step 2: User Personal Data -->
-                            <div id="step2" class="form-step side-by-side-inputs" style="display: none;">
+                            <div id="step2" class="form-step side-by-side-inputs" style="visibility: hidden; position: absolute;">
                                 <!-- First Name -->
                                 <div class="form-group">
                                     <label for="first_name">Imię
@@ -101,11 +115,65 @@
             </div>
         </div>
     </div>
-
     <script>
-        function showStep(step) {
-            document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
-            document.getElementById('step2').style.display = step === 2 ? 'block' : 'none';
+        function saveData(step) {
+            // Pobierz wszystkie inputy z obecnego kroku i zapisz ich wartości w Local Storage
+            const inputs = document.querySelectorAll('#step' + step + ' input');
+            inputs.forEach(input => {
+                localStorage.setItem(input.name, input.value);
+            });
         }
+
+        function loadData(step) {
+            // Załaduj dane dla obecnego kroku z Local Storage i wstaw je do inputów
+            const inputs = document.querySelectorAll('#step' + step + ' input');
+            inputs.forEach(input => {
+                if (localStorage.getItem(input.name)) {
+                    input.value = localStorage.getItem(input.name);
+                }
+            });
+        }
+
+        function showStep(stepNumber) {
+            // Ukryj wszystkie kroki
+            var steps = document.querySelectorAll('.form-step');
+            steps.forEach(function(step) {
+                step.style.visibility = 'hidden';
+                step.style.position = 'absolute';
+            });
+
+            // Zapisz dane przed przejściem do następnego kroku
+            if (stepNumber > 1) {
+                saveData(stepNumber - 1);
+            }
+
+            // Pokaż wybrany krok
+            var stepToShow = document.querySelector('#step' + stepNumber);
+            if (stepToShow) {
+                stepToShow.style.visibility = 'visible';
+                stepToShow.style.position = 'relative';
+            }
+
+            // Załaduj dane jeśli wracamy do poprzedniego kroku
+            loadData(stepNumber);
+        }
+
+        // Wywołaj tę funkcję na początku, aby pokazać tylko pierwszy krok i załadować dane jeśli są dostępne
+        showStep(1);
+
+        // Przyciski do przełączania kroków
+        document.querySelector('#nextBtn').addEventListener('click', function() {
+            showStep(2);
+        });
+
+        document.querySelector('#prevBtn').addEventListener('click', function() {
+            showStep(1);
+        });
+
+        // Usuń dane z Local Storage po pomyślnym wysłaniu formularza
+        document.querySelector('form').addEventListener('submit', function() {
+            localStorage.clear();
+        });
     </script>
+
 @endsection
