@@ -17,8 +17,8 @@ class UserDataController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $userDatas = UserData::all();
-        return view('userdatas.index', compact('userDatas'));
+        $userData = auth()->user()->userData;
+        return view('user.user_data', compact('userData'));
     }
 
     /**
@@ -38,7 +38,7 @@ class UserDataController extends Controller
         ]);
 
         UserData::create($validatedData);
-        return redirect()->route('userdatas.index')->with('success', 'User data created successfully');
+        return redirect()->route('user.user_data')->with('success', 'User data created successfully');
     }
 
     /**
@@ -48,7 +48,7 @@ class UserDataController extends Controller
     public function show(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $userData = UserData::findOrFail($id);
-        return view('userdatas.show', compact('userData'));
+        return view('user.user_data', compact('userData'));
     }
 
     /**
@@ -58,14 +58,14 @@ class UserDataController extends Controller
     public function edit(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $userData = UserData::findOrFail($id);
-        return view('userdatas.edit', compact('userData'));
+        return view('user.user_data', compact('userData'));
     }
 
     /**
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         $validatedData = $request->validate([
             'first_name' => 'required|max:255',
@@ -79,17 +79,12 @@ class UserDataController extends Controller
 
         $userData = UserData::findOrFail($id);
         $userData->update($validatedData);
-        return redirect()->route('userdatas.index')->with('success', 'User data updated successfully');
+
+        return response()->json([
+            'message' => 'Dane zostały zaktualizowane pomyślnie.',
+            'data' => $userData
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
 
-    public function destroy(string $id): RedirectResponse
-    {
-        $userData = UserData::findOrFail($id);
-        $userData->delete();
-        return redirect()->route('userdatas.index')->with('success', 'User data deleted successfully');
-    }
 }

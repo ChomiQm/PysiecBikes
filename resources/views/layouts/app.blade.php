@@ -9,6 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Pysiec Bikes!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
@@ -23,32 +27,46 @@
                     <li><a href="{{ url('/') }}#about_us">O nas</a></li>
                     <li><a class="navjump" href="{{ url('/shop') }}">Sklep</a></li>
                     <li><a href="{{ url('/') }}#CTA">Kontakt</a></li>
-                    {{-- Poniższy kod jest przykładem integracji z systemem logowania Laravel --}}
-                    {{-- @auth
-                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a></li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    @else
-                    <li><a href="{{ route('login') }}">Logowanie</a></li>
-                    @endauth --}}
+                    @auth
+                        <li><a href="{{ route('user_data.index') }}">Moje Dane</a></li>
+                        <li><a href="{{ route('orders.index') }}">Moje Zamówienia</a></li>
+                        <li><a href="{{ route('documents.create') }}">Lista Dokumentów</a></li> <!-- Changed this line -->
+                        @can('admin-panel-access')
+                            <li><a href="{{ route('admin.dashboard') }}">Dashboard Admina</a></li>
+                            <li><a href="{{ route('admin.roles.index') }}">Role</a></li>
+                            <li><a href="{{ route('admin.permissions.index') }}">Uprawnienia</a></li>
+                        @endcan
+                        <li><a id="logout-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endauth
+                    @guest
+                        <li><a href="{{ route('login') }}">Logowanie</a></li>
+                        <li><a href="{{ route('register') }}">Rejestracja</a></li>
+                    @endguest
                 </ul>
             </div>
             <i class="fa-solid fa-bars" onclick="showMenu()"></i>
         </nav>
     </div>
     @yield('content')
+    <footer>
+        @yield('footer')
+    </footer>
 </section>
 
 <script src="{{ asset('js/menutoggle.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.navLinks').on("click", ".navjump", function(e) {
-            e.preventDefault();
-            let page = $(this).attr('href');
-            $('body').load(page);
-        });
+<script>
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault();
+        localStorage.clear();
+        sessionStorage.clear();
+        document.getElementById('logout-form').submit();
     });
 </script>
+
+@stack('custom-scripts')
+
 </body>
 </html>

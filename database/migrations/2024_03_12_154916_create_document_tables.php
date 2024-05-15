@@ -60,15 +60,16 @@ return new class extends Migration {
             $table->primary(['document_id', 'role_id']);
         });
 
-
-        Schema::create('encryption_keys', function (Blueprint $table) use ($tableNames) {
+        Schema::create('encryption_keys', function (Blueprint $table) {
             $table->uuid('document_version_id');
-            $table->foreign('document_version_id')->references('id')->on('document_versions')->onDelete('cascade');
             $table->text('encryption_key');
-            $table->uuid('role_id');
-            $table->foreign('role_id')->references('uuid')->on($tableNames['roles'])->onDelete('cascade');
-            $table->primary(['document_version_id', 'role_id']);
+            $table->timestamp('used_at')->nullable(); // Dodanie kolumny określającej, kiedy klucz został użyty.
+            $table->boolean('is_archived')->default(false); // Dodanie kolumny wskazującej, czy klucz został zarchiwizowany.
+
+            $table->foreign('document_version_id')->references('id')->on('document_versions')->onDelete('cascade');
+            $table->primary('document_version_id');
         });
+
     }
 
     /**

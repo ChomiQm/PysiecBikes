@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -22,7 +21,7 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected string $redirectTo = RouteServiceProvider::HOME;
+    protected string $redirectTo = '/';
 
     public function __construct()
     {
@@ -89,7 +88,6 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
-        // Przekierowanie użytkownika po pomyślnej rejestracji
         return redirect('/');
     }
 }

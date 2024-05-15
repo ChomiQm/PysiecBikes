@@ -14,6 +14,11 @@ class EncryptionKey extends Model
         'document_version_id', 'encryption_key', 'role_id',
     ];
 
+    public function getIdAttribute($value)
+    {
+        return $this->attributes['id'];
+    }
+
     /**
      * The document version that owns the encryption key.
      */

@@ -12,9 +12,8 @@ class DocumentVersion extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'id', 'document_id', 'version_number', 'file_path', 'checksum', 'created_by',
+        'id', 'document_id', 'version_number', 'file_path', 'checksum', 'created_by'
     ];
-
     /**
      * Get the document that owns the version.
      */
@@ -29,5 +28,14 @@ class DocumentVersion extends Model
     public function encryptionKeys(): HasMany
     {
         return $this->hasMany(EncryptionKey::class, 'document_version_id');
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($version) {
+            if (empty($version->id)) {
+                $version->id = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
     }
 }

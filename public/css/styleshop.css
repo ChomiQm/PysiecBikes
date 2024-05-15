@@ -155,6 +155,23 @@
 		background: #FF00FF;
 	}
 
+    .btn-clear-cart {
+        display: flex;
+        margin: 1.5rem auto;
+        padding: 12px 20px;
+        border: none;
+        background: #ff0000;
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-clear-cart:hover {
+        background: #cc0000;
+    }
+
 	#close-cart {
 		position: absolute;
 		top: 1rem;
@@ -272,4 +289,4 @@
 		width: 400px;
 	}
 
-	}
+    }

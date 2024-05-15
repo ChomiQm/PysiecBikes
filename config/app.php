@@ -39,10 +39,11 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'PDFService' => Barryvdh\DomPDF\Facade\Pdf::class,
     ])->toArray(),
 
 ];

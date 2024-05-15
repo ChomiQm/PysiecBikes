@@ -6,12 +6,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <title>Pysiec Bikes!</title>
 </head>
 <body>
 <section class="header">
-    <!-- 1920x1080 -->
-    <!-- ---------------------------HEADER--------------------------- -->
     <div class="nav-box" id="nav-box">
         <nav>
             <a href="{{ url('/') }}"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
@@ -19,27 +19,36 @@
                 <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
                 <ul>
                     <li><a class="navjump" href="{{ url('/') }}">Główna</a></li>
-                    <li><a href="#about_us">O nas</a></li>
+                    <li><a href="{{ url('/') }}#about_us">O nas</a></li>
                     <li><a class="navjump" href="{{ url('/shop') }}">Sklep</a></li>
-                    <li><a href="#CTA">Kontakt</a></li>
-{{--                    @if (Auth::check())--}}
-{{--                        <!-- Użytkownik jest zalogowany -->--}}
-{{--                        <li><a href="logouthandler.php">Logout</a></li>--}}
-{{--                    @else--}}
-{{--                        <!-- Użytkownik nie jest zalogowany -->--}}
-{{--                        <li><a href="login.php">Login</a></li>--}}
-{{--                    @endif--}}
+                    <li><a href="{{ url('/') }}#CTA">Kontakt</a></li>
+                    @auth
+                        <li><a href="{{ route('user_data.index') }}">Moje Dane</a></li>
+                        <li><a href="{{ route('orders.index') }}">Moje Zamówienia</a></li>
+                        <li><a href="{{ route('documents.create') }}">Lista Dokumentów</a></li> <!-- Changed this line -->
+                        @can('admin-panel-access')
+                            <li><a href="{{ route('admin.dashboard') }}">Dashboard Admina</a></li>
+                            <li><a href="{{ route('admin.roles.index') }}">Role</a></li>
+                            <li><a href="{{ route('admin.permissions.index') }}">Uprawnienia</a></li>
+                        @endcan
+                        <li><a id="logout-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endauth
+                    @guest
+                        <li><a href="{{ route('login') }}">Logowanie</a></li>
+                        <li><a href="{{ route('register') }}">Rejestracja</a></li>
+                    @endguest
                 </ul>
             </div>
-            <i class="fa-solid fa-bars" onclick="showMenu()"> </i>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
         </nav>
     </div>
     <header>
         <div class="text-box">
             <h1>Pysiec_bikes</h1>
-            <p>
-                Firma tworzona dla rowerzystów przez rowerzystów<br />
-            </p>
+            <p>Firma tworzona dla rowerzystów przez rowerzystów<br /></p>
             <a href="{{ url('/shop') }}" class="hero-btn">Zobacz więcej!</a>
         </div>
     </header>
@@ -91,7 +100,7 @@
             <div class="row">
                 <div class="bikes-column">
                     <img src="{{ asset('images/mtb.jpg') }}" alt="mtb"/>
-                    <a href="{{ url('/shop') }}l">
+                    <a href="{{ url('/shop') }}">
                         <div class="bikes-layer">
                             <h3> MTB </h3>
                             <p> Rower MTB (Mountain Terrain Bike) zwany popularnie po prostu “góralem”, to jeden z najchętniej kupowanych w Polsce rowerów. <br />
@@ -262,6 +271,15 @@
                 let page = $(this).attr('href');
                 $('body').load(page);
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            document.getElementById('logout-form').submit();
         });
     </script>
 

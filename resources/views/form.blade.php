@@ -14,30 +14,28 @@
 		<section class="header">
 		<!-- 1920x1080 -->
 			<div class="nav-box" id="nav-box">
-				<nav>
+                <nav>
                     <a href="{{ url('/') }}"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
-					<div class="navLinks">
-					<i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
-						<ul>
+                    <div class="navLinks">
+                        <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                        <ul>
                             <li><a class="navjump" href="{{ url('/') }}">Główna</a></li>
-                            <li><a href="#about_us">O nas</a></li>
                             <li><a class="navjump" href="{{ url('/shop') }}">Sklep</a></li>
-                            <li><a href="#CTA">Kontakt</a></li>
-{{--							<?php--}}
-{{--							if($login_session == null) :--}}
-{{--							?>--}}
-{{--							<li><a href="login.php">Login</a></li>--}}
-{{--							<?php--}}
-{{--							else :--}}
-{{--							?>--}}
-{{--							<li><a href="logouthandler.php">Logout</a></li>--}}
-{{--							<?php--}}
-{{--							endif;--}}
-{{--							?>--}}
-						</ul>
-					</div>
-					<i class="fa-solid fa-bars" onclick="showMenu()"> </i>
-				</nav>
+                            @auth
+                                <!-- Użytkownik jest zalogowany -->
+                                <li><a href="{{ route('logout') }}" onclick="preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
+                                    @csrf
+                                </form>
+                            @endauth
+                            @guest
+                                <li><a href="{{ route('login') }}">Login</a></li>
+                                <li><a href="{{ route('register') }}">Rejestracja</a></li>
+                            @endguest
+                        </ul>
+                    </div>
+                    <i class="fa-solid fa-bars" onclick="showMenu()"> </i>
+                </nav>
 			</div>
 			<header>
 			<div class="text-box">

@@ -10,7 +10,9 @@ use Illuminate\Support\Str;
 class OrderItem extends Model
 {
     use HasFactory;
-
+    /**
+     * @var float|int|mixed
+     */
     protected $keyType = 'string';
     public $incrementing = false;
     protected $fillable = ['order_id', 'bike_id', 'quantity', 'total_price'];

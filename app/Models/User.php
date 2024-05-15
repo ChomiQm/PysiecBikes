@@ -38,7 +38,7 @@ class User extends Authenticatable
 
     public function userData(): HasOne
     {
-        return $this->hasOne(UserData::class);
+        return $this->hasOne(UserData::class, 'user_id');
     }
 
     public function orders(): HasMany

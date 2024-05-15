@@ -14,7 +14,7 @@ class Order extends Model
 
     protected $keyType = 'string';
     public $incrementing = false;
-    protected $fillable = ['quantity', 'user_id', 'order_number'];
+    protected $fillable = ['user_id', 'quantity', 'total_price', 'order_number'];
 
     protected static function boot(): void
     {
@@ -28,11 +28,13 @@ class Order extends Model
 
     public function user(): BelongsTo
     {
+        // Definicja relacji do modelu User
         return $this->belongsTo(User::class);
     }
 
     public function orderItems(): HasMany
     {
+        // Definicja relacji do modelu OrderItem
         return $this->hasMany(OrderItem::class, 'order_id');
     }
 }

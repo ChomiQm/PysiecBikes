@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Document extends Model
 {
@@ -15,6 +16,20 @@ class Document extends Model
     protected $fillable = [
         'id', 'name', 'current_version_id',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::creating(function ($document) {
+            if (empty($document->id)) {
+                $document->id = (string) Str::uuid();
+            }
+        });
+    }
 
     /**
      * Get the versions for the document.

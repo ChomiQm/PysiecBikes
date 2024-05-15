@@ -6,6 +6,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/register.scss',
+                'resources/sass/admin_dashboard.scss',
             ],
             refresh: true,
         }),
