@@ -1,14 +1,13 @@
-{{-- resources/views/admin/roles/index.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
     @vite(['resources/sass/role.scss'])
     <div class="container">
-        <h1>Role</h1>
-        <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">Dodaj nową rolę</a>
-        </div>
         <div class="card">
+            <div class="card-header">
+                <h1>Role</h1>
+                <a href="{{ route('admin.roles.create') }}" class="btn add-role-button">Dodaj nową rolę</a>
+            </div>
             <div class="card-body">
                 <table class="table">
                     <thead>

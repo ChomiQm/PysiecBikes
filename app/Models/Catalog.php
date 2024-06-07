@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Catalog extends Model
 {
@@ -13,30 +14,31 @@ class Catalog extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'id', 'name', 'parent_id',
+        'id', 'name', 'path', 'parent_id',
     ];
 
-    /**
-     * Get the sub-catalogs for the catalog.
-     */
     public function subCatalogs(): HasMany
     {
         return $this->hasMany(Catalog::class, 'parent_id');
     }
 
-    /**
-     * Get the parent catalog of the catalog.
-     */
     public function parentCatalog(): BelongsTo
     {
         return $this->belongsTo(Catalog::class, 'parent_id');
     }
 
-    /**
-     * The roles that belong to the catalog.
-     */
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'catalog_roles');
+        return $this->belongsToMany(Role::class, 'catalog_roles', 'catalog_id', 'role_id');
+    }
+
+    public static function generatePathForCatalog($catalog)
+    {
+        $path = [];
+        while ($catalog) {
+            array_unshift($path, $catalog->name);
+            $catalog = $catalog->parentCatalog;
+        }
+        return 'storage/' . implode('/', $path);
     }
 }

@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-4">
+    @vite(['resources/sass/order.scss'])
+    <div class="container mt-4" id="ordersContainer">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -27,7 +28,7 @@
                                             Numer: {{ $order->order_number }} |
                                             Data: {{ $order->created_at->format('d-m-Y H:i') }} |
                                             Ilość produktów: {{ $order->quantity }}
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#detailsModal" data-details='@json($order->orderItems)'>Pokaż szczegóły</button>
+                                            <button class="btn btn-primary" onclick="showOrderDetails(this)" data-details='@json($order->orderItems)'>Pokaż szczegóły</button>
                                         </div>
                                     </li>
                                 @endforeach
@@ -42,44 +43,38 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailsModalLabel">Szczegóły zamówienia</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="modalContent">
-                    <!-- Dane zamówienia będą załadowane tutaj -->
-                </div>
-            </div>
+    <!-- Modal-like section for order details -->
+    <div class="order-details-modal" id="orderDetailsModal">
+        <div class="order-details-content">
+            <span class="close" onclick="hideOrderDetails()">&times;</span>
+            <h5>Szczegóły zamówienia</h5>
+            <div id="modalContent"></div>
         </div>
     </div>
 @endsection
 
 @push('custom-scripts')
     <script>
-        $(document).ready(function() {
-            // Pokaż modal 'detailsModal' po kliknięciu przycisku 'Pokaż szczegóły'
-            $('.btn-primary').click(function() {
-                var orderItems = $(this).data('details');
-                var contentHtml = '<ul>';
-                orderItems.forEach(function(item) {
-                    var totalPrice = parseFloat(item.total_price);  // Konwersja na liczbę
-                    contentHtml += '<li>' + item.bike.name + ' - ' + item.quantity + ' szt - ' + totalPrice.toFixed(2) + ' zł</li>';
-                });
-                contentHtml += '</ul>';
-                $('#modalContent').html(contentHtml);
-                $('#detailsModal').modal('show');
-            });
-
-            // Zamykanie modala 'detailsModal' przy użyciu przycisku zamknięcia w modalu
-            $('.close').click(function() {
-                $('#detailsModal').modal('hide');
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            hideOrderDetails();
         });
+
+        function showOrderDetails(button) {
+            var orderItems = JSON.parse(button.getAttribute('data-details'));
+            var contentHtml = '<ul>';
+            orderItems.forEach(function(item) {
+                var totalPrice = parseFloat(item.total_price);
+                contentHtml += '<li>' + item.bike.name + ' - ' + item.quantity + ' szt - ' + totalPrice.toFixed(2) + ' zł</li>';
+            });
+            contentHtml += '</ul>';
+            document.getElementById('modalContent').innerHTML = contentHtml;
+            document.getElementById('orderDetailsModal').style.display = 'flex';
+            document.getElementById('ordersContainer').style.display = 'none';
+        }
+
+        function hideOrderDetails() {
+            document.getElementById('orderDetailsModal').style.display = 'none';
+            document.getElementById('ordersContainer').style.display = 'flex';
+        }
     </script>
 @endpush

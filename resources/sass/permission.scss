@@ -1,69 +1,129 @@
+// Zmienne
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: rgba(255, 255, 255, 0.8);
+$text-color: #ffffff; // Zmieniono na biały kolor tekstu
+$card-background-color: rgba(0, 0, 0, 0.7); // Półprzezroczyste czarne tło dla kart
+$card-text-color: #ffffff; // Biały kolor tekstu dla kart
+$danger-color: #e74c3c; // Dodana zmienna dla koloru danger
+$hover-primary-color: darken($primary-color, 10%);
+$hover-danger-color: darken($danger-color, 10%);
+$box-shadow-color: rgba(0, 0, 0, 0.1);
+
+// Resetuje marginesy i paddingi, aby usunąć biały pas
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Usunięcie marginesów i paddingu z html i body
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; // Ustawienie pełnej wysokości
+    width: 100%;  // Ustawienie pełnej szerokości
+}
+
+// Stylowanie kontenera, aby używał pełnej wysokości i szerokości ekranu
+body {
+    display: flex;
+    justify-content: center; // Centrowanie poziome
+    align-items: flex-start; // Rozpoczęcie zawartości od góry
+    min-height: 100vh; // Pełna wysokość ekranu, aby cała strona była zajęta
+    margin: 0; // Usuwa wszelkie domyślne marginesy
+}
+
 .container {
-    transform: translateY(10%);
-    margin-top: 30px;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center; // Centrowanie poziome
+    align-items: center; // Centrowanie pionowe
+    min-height: calc(100vh - 60px); // Ustawienie wysokości kontenera
     padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    width: 100%;
+}
+
+.card {
+    width: 100%; // Umożliwia wykorzystanie pełnej szerokości dostępnej przestrzeni
+    max-width: 900px; // Maksymalna szerokość karty
+    padding: 20px; // Wewnętrzny odstęp dla elementów formularza
+    border-radius: 8px; // Zaokrąglenie rogów dla estetyki
+    box-shadow: 0 4px 8px $box-shadow-color; // Lekki cień dla dodania głębi
+    background-color: $card-background-color; // Półprzezroczyste tło dla lepszej widoczności
+    color: $card-text-color; // Kolor tekstu w kartach
+    margin-top: 100px; // Przesunięcie karty poniżej navbaru
 }
 
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: $text-color;
 }
 
-.input-group {
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+    color: $text-color;
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .text-danger {
+        color: $danger-color;
+        font-size: 14px;
+        margin-top: 5px;
+    }
 }
 
-.btn-primary {
-    background-color: #3498db;
+.btn-primary,
+.btn-danger {
+    background-color: $primary-color;
     border: none;
     border-radius: 4px;
     color: #ffffff;
     cursor: pointer;
+    font-size: 12px; // Zmniejszenie rozmiaru czcionki przycisków
+    padding: 5px 10px; // Zmniejszenie paddingu
 
     &:hover {
-        background-color: #2980b9;
+        background-color: $hover-primary-color;
     }
 }
 
 .btn-danger {
-    background-color: #e74c3c;
-    border: none;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    margin-left: 10px;
+    background-color: $danger-color;
 
     &:hover {
-        background-color: #c0392b;
+        background-color: $hover-danger-color;
     }
 }
 
 .table {
     width: 100%;
     margin-bottom: 1rem;
-    color: #212529;
+    color: #ffffff;
     border-collapse: collapse;
     text-align: left;
 
     thead {
-        background-color: #34495e;
+        background-color: $secondary-color;
         color: #ffffff;
         border-radius: 8px;
     }
 
-    th,
-    td {
+    th, td {
         padding: 10px;
         border-bottom: 1px solid #ddd;
     }
@@ -73,7 +133,7 @@ h1 {
     }
 
     tr:hover {
-        background-color: #f1f1f1;
+        background-color: rgba(255, 255, 255, 0.1); // Zmieniono na półprzezroczyste tło
     }
 }
 
@@ -81,21 +141,30 @@ h1 {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    list-style-type: none; // Usunięcie kropek
 
-    .page-link {
-        color: #3498db;
-        border: none;
+    .page-item {
         margin: 0 5px;
-        cursor: pointer;
 
-        &:hover {
-            color: #2980b9;
+        .page-link {
+            color: $primary-color;
+            border: none;
+            font-size: 12px; // Zmniejszenie rozmiaru czcionki w paginacji
+            padding: 2px 6px; // Zmniejszenie paddingu w paginacji
+
+            &:hover {
+                color: $hover-primary-color;
+            }
         }
-    }
 
-    .page-item.active .page-link {
-        background-color: #3498db;
-        border-color: #3498db;
-        color: #ffffff;
+        &.disabled .page-link {
+            color: $secondary-color;
+        }
+
+        &.active .page-link {
+            background-color: $primary-color;
+            border-color: $primary-color;
+            color: #ffffff;
+        }
     }
 }

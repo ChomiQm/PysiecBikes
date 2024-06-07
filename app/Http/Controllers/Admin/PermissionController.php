@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Permission;
+use App\Models\Role; // Dodajemy import dla modelu Role
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,7 @@ class PermissionController extends Controller
 
     public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $roles = Role::all();
+        $roles = Role::all(); // Upewniamy się, że model Role jest poprawnie zaimportowany i używany
         return view('admin.permissions.create', compact('roles'));
     }
 

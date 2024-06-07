@@ -1,0 +1,109 @@
+// Zmienne
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: #f8f9fa;
+$text-color: #343a40;
+$card-background-color: rgba(0, 0, 0, 0.7); // Półprzezroczyste czarne tło dla kart
+$card-text-color: #ffffff; // Biały kolor tekstu dla kart
+
+// Resetuje marginesy i paddingi, aby usunąć biały pas
+.header, .nav-box {
+    margin: 0;
+    padding: 0;
+}
+
+// Usunięcie marginesów i paddingu z html i body
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; // Ustawienie pełnej wysokości
+}
+
+// Stylowanie kontenera, aby używał pełnej wysokości i szerokości ekranu
+.container {
+    display: flex;
+    justify-content: center; // Centrowanie poziome
+    align-items: flex-start; // Rozpoczęcie zawartości od góry
+    min-height: 100vh; // Pełna wysokość ekranu, aby cała strona była zajęta
+    padding: 20px; // Wewnętrzny odstęp dla elementów formularza
+    width: 100vw; // Zapewnia, że kontener używa pełnej dostępnej szerokości widoku
+    margin: 0; // Usuwa wszelkie domyślne marginesy
+}
+
+// Dopasowanie kontenera edytora
+.card {
+    width: 100%; // Umożliwia wykorzystanie pełnej szerokości dostępnej przestrzeni
+    max-width: none; // Usuwa ograniczenie na maksymalną szerokość
+    padding: 20px; // Wewnętrzny odstęp dla elementów formularza
+    border-radius: 8px; // Zaokrąglenie rogów dla estetyki
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); // Lekki cień dla dodania głębi
+    background-color: $card-background-color; // Półprzezroczyste tło dla lepszej widoczności
+    color: $card-text-color; // Kolor tekstu w kartach
+}
+
+// Stylowanie dla kontenera listy dokumentów
+.list-group-container {
+    max-height: 80vh; // Maksymalna wysokość dla przewijanej listy
+    overflow-y: auto; // Przewijanie pionowe, jeśli zawartość przekracza maksymalną wysokość
+    margin-right: 20px; // Dodatkowy margines po prawej stronie
+}
+
+// Stylowanie listy dokumentów
+.list-group {
+    display: flex;
+    flex-direction: column; // Ustawienie elementów w kolumnie
+}
+
+.list-group-item {
+    padding: 10px 15px; // Dodanie paddingu dla lepszej prezentacji
+    border: 1px solid #ddd; // Lekka ramka dla oddzielenia elementów listy
+    margin-bottom: 10px; // Zwiększenie odstępu między elementami listy
+    background-color: #f8f9fa; // Jasne tło dla elementów listy
+    color: #333; // Kolor tekstu
+    text-decoration: none; // Usunięcie podkreślenia z linków
+}
+
+.list-group-item:hover, .list-group-item.active {
+    background-color: #007bff; // Kolor tła po najechaniu oraz aktywnego elementu
+    color: white; // Kolor tekstu dla aktywnego elementu
+}
+
+// Style dla przycisku 'Zapisz' i 'Dodaj nowy dokument'
+.editor-form {
+    display: flex;
+    flex-direction: column; // Elementy formularza układane są w pionie
+    align-items: center; // Centrowanie przycisku i pól względem siebie
+    background-color: transparent; // Usunięcie tła formularza
+}
+
+.editor-form .d-flex {
+    width: 100%;
+    justify-content: space-between; // Rozstawienie przycisków
+}
+
+.editor-form button,
+.editor-form .btn-success {
+    width: 48%; // Podobna szerokość dla obu przycisków
+    margin: 5px; // Odstęp między przyciskami
+    padding: 10px; // Wygodne paddingi
+    text-align: center; // Centrowanie tekstu wewnątrz przycisku
+}
+
+// Dodatkowe poprawki do inputów i textarea
+input[type="text"], textarea {
+    width: 100%; // Pełna szerokość w ramach kontenera formularza
+    padding: 10px; // Komfortowy padding wewnętrzny
+    border-radius: 4px; // Subtelne zaokrąglenie rogów
+}
+
+// Stylowanie przycisku 'Dodaj nowy dokument'
+.btn-success {
+    color: white; // Kolor tekstu
+    background-color: #28a745; // Kolor tła przycisku
+    border: none; // Usunięcie domyślnej ramki
+    text-decoration: none; // Usunięcie podkreślenia z linku
+}
+
+.btn-success:hover {
+    background-color: #218838; // Kolor tła przycisku po najechaniu
+}

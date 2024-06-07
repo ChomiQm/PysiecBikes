@@ -4,34 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class EncryptionKey extends Model
 {
-    protected $keyType = 'string';
     public $incrementing = false;
+    public $timestamps = false; // Jeśli nie masz kolumn created_at i updated_at
+
+    protected $primaryKey = 'document_version_id'; // Klucz główny to document_version_id
 
     protected $fillable = [
-        'document_version_id', 'encryption_key', 'role_id',
+        'document_version_id', 'encryption_key', 'used_at', 'is_archived'
     ];
 
-    public function getIdAttribute($value)
-    {
-        return $this->attributes['id'];
-    }
-
     /**
-     * The document version that owns the encryption key.
+     * Get the document version that owns the encryption key.
      */
     public function documentVersion(): BelongsTo
     {
         return $this->belongsTo(DocumentVersion::class, 'document_version_id');
-    }
-
-    /**
-     * The role that the encryption key belongs to.
-     */
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class, 'role_id');
     }
 }

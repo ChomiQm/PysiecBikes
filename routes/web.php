@@ -72,4 +72,3 @@ Route::middleware('auth')->group(function () {
     Route::get('/documents/create', [DocumentController::class, 'create'])->name('documents.create');
     Route::get('/documents/{documentId}/show-pdf', [DocumentController::class, 'showPdf'])->name('documents.showPdf');
 });
-

@@ -28,7 +28,7 @@
             @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->user_data->first_name ?? '' }} {{ $user->user_data->last_name ?? '' }}</td>
+                    <td>{{ $user->userData->first_name ?? '' }} {{ $user->userData->last_name ?? '' }}</td>
                     <td>
                         @foreach ($user->roles as $role)
                             <span class="badge badge-primary">{{ $role->name }}</span>

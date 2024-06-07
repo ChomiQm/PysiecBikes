@@ -16,7 +16,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
-<section class="header">
+<section class="header" style="margin: 0; padding: 0;">
     <div class="nav-box" id="nav-box">
         <nav>
             <a href="{{ url('/') }}"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
@@ -30,12 +30,12 @@
                     @auth
                         <li><a href="{{ route('user_data.index') }}">Moje Dane</a></li>
                         <li><a href="{{ route('orders.index') }}">Moje Zamówienia</a></li>
-                        <li><a href="{{ route('documents.create') }}">Lista Dokumentów</a></li> <!-- Changed this line -->
-                        @can('admin-panel-access')
+                        <li><a href="{{ route('documents.create') }}">Lista Dokumentów</a></li>
+                        @if (Auth::user()->hasRole('Admin'))
                             <li><a href="{{ route('admin.dashboard') }}">Dashboard Admina</a></li>
                             <li><a href="{{ route('admin.roles.index') }}">Role</a></li>
                             <li><a href="{{ route('admin.permissions.index') }}">Uprawnienia</a></li>
-                        @endcan
+                        @endif
                         <li><a id="logout-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a></li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

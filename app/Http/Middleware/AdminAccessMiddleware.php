@@ -9,8 +9,8 @@ class AdminAccessMiddleware
 {
     public function handle($request, Closure $next)
     {
-        // Sprawdź, czy użytkownik jest zalogowany i czy ma uprawnienia do admin panelu
-        if (!Auth::check() || !Auth::user()->can('admin-panel-access')) {
+        // Sprawdź, czy użytkownik jest zalogowany i czy ma rolę Admin
+        if (!Auth::check() || !Auth::user()->hasRole('Admin')) {
             abort(403, 'Access Denied');
         }
 

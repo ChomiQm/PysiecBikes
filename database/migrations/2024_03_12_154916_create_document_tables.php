@@ -16,6 +16,7 @@ return new class extends Migration {
         Schema::create('catalogs', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('path')->unique();
             $table->uuid('parent_id')->nullable();
             $table->timestamps();
 
@@ -55,10 +56,11 @@ return new class extends Migration {
             $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
 
             $table->uuid('role_id');
-            $table->foreign('role_id')->references('uuid')->on($tableNames['roles'])->onDelete('cascade'); // Zmień tutaj na 'uuid'
+            $table->foreign('role_id')->references('uuid')->on($tableNames['roles'])->onDelete('cascade');
 
             $table->primary(['document_id', 'role_id']);
         });
+
 
         Schema::create('encryption_keys', function (Blueprint $table) {
             $table->uuid('document_version_id');

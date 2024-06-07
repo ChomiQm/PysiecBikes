@@ -52,6 +52,14 @@ class Document extends Model
      */
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'document_access');
+        return $this->belongsToMany(Role::class, 'document_access', 'document_id', 'role_id');
+    }
+
+    /**
+     * The access records related to the document.
+     */
+    public function access(): HasMany
+    {
+        return $this->hasMany(DocumentAccess::class, 'document_id');
     }
 }

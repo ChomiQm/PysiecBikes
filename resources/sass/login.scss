@@ -10,7 +10,10 @@
 
 // Styles for the login container
 .container {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,9 +23,6 @@
 }
 
 .card {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px); // Increased blur for aesthetic
     border-radius: 0.5rem;

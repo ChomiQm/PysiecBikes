@@ -1,0 +1,181 @@
+// Zmienne
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: rgba(255, 255, 255, 0.8);
+$text-color: #343a40;
+$card-background-color: rgba(0, 0, 0, 0.7);
+$card-text-color: #ffffff;
+$modal-background-color: #ffffff;
+$modal-text-color: #343a40;
+$danger-color: #e74c3c;
+$hover-primary-color: darken($primary-color, 10%);
+$hover-danger-color: darken($danger-color, 10%);
+$box-shadow-color: rgba(0, 0, 0, 0.1);
+
+// Stylowanie kontenera, aby używał pełnej wysokości i szerokości ekranu
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+// Kontener główny
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+    padding: 20px;
+    width: 100%;
+}
+
+// Karta
+.card {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px $box-shadow-color;
+    background-color: $card-background-color;
+    color: $card-text-color;
+    margin-top: 20px;
+}
+
+// Nagłówek karty
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $secondary-color;
+    color: $card-text-color;
+    padding: 10px 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-header h4 {
+    margin: 0;
+}
+
+// Formularz wyszukiwania
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .form-control {
+        border-radius: 4px;
+        padding: 8px;
+        border: 1px solid #ccc;
+    }
+
+    .input-group-append {
+        .btn {
+            background-color: $primary-color;
+            border: none;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 8px 12px;
+
+            &:hover {
+                background-color: $hover-primary-color;
+            }
+        }
+    }
+}
+
+// Lista zamówień
+.list-group-item {
+    background-color: $background-color;
+    border: 1px solid #ddd;
+    color: $text-color;
+    margin-bottom: 5px;
+
+    .btn-primary {
+        background-color: $primary-color;
+        border: none;
+        color: #ffffff;
+        border-radius: 4px;
+        padding: 5px 10px;
+
+        &:hover {
+            background-color: $hover-primary-color;
+        }
+    }
+}
+
+// Paginacja
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    list-style-type: none;
+
+    .page-item {
+        margin: 0 5px;
+
+        .page-link {
+            color: $primary-color;
+            border: none;
+            font-size: 12px;
+            padding: 2px 6px;
+
+            &:hover {
+                color: $hover-primary-color;
+            }
+        }
+
+        &.disabled .page-link {
+            color: $secondary-color;
+        }
+
+        &.active .page-link {
+            background-color: $primary-color;
+            border-color: $primary-color;
+            color: #ffffff;
+        }
+    }
+}
+
+// Modal-like section
+.order-details-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-details-content {
+    background-color: $modal-background-color;
+    padding: 20px;
+    border: 1px solid $box-shadow-color;
+    width: 80%;
+    max-width: 600px;
+    color: $modal-text-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px $box-shadow-color;
+    text-align: center;
+}
+
+.close {
+    color: $modal-text-color;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+
+    &:hover,
+    &:focus {
+        color: $danger-color;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
